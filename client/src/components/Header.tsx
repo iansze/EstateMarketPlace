@@ -1,10 +1,7 @@
-import { FC } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-interface HeaderProps {}
-
-const Header: FC<HeaderProps> = ({}) => {
+const Header = () => {
   return (
     <header className=" bg-slate-200 shadow-sm ">
       <div className="flex justify-between mx-auto w-5/6 items-center p-3">

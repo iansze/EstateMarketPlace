@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Profile from "./pages/Profile";
-import SignOut from "./pages/SignOut";
-import SignIn from "./pages/SignIn";
+import Home from "./pages/HomePage";
+import About from "./pages/AboutPage";
+import Profile from "./pages/ProfilePage";
+import SignIn from "./pages/SignInPage";
+import SignUp from "./pages/SignUpPage";
 import Header from "./components/Header";
 
 const App: FC = () => {
@@ -16,7 +16,7 @@ const App: FC = () => {
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-out" element={<SignOut />} />
+        <Route path="/sign-up" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );
