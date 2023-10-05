@@ -1,9 +1,7 @@
-import React from "react";
+import Form from "../components/component/Form";
 
-type Props = {};
-
-const SignInPage = (props: Props) => {
-  return <div>SignIn</div>;
+const SignInPage = () => {
+  return <Form mode="signIn" />;
 };
 
 export default SignInPage;
