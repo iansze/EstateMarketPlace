@@ -1,24 +1,28 @@
 import { FC } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "../src/components/util/Http";
 import Home from "./pages/HomePage";
 import About from "./pages/AboutPage";
 import Profile from "./pages/ProfilePage";
 import SignIn from "./pages/SignInPage";
 import SignUp from "./pages/SignUpPage";
-import Header from "./components/Header";
+import Header from "./components/component/Header";
 
 const App: FC = () => {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
-      </Routes>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 
