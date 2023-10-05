@@ -12,15 +12,12 @@ export const signUp = async (data: FormValues) => {
       },
       body: JSON.stringify(data),
     });
-
     if (!res.ok) {
       const errorData = await res.json();
-      console.log(errorData);
+
       throw new Error(errorData.message);
     }
-
     const responseData = await res.json();
-    console.log(responseData);
     return responseData;
   } catch (err) {
     console.error(err);
