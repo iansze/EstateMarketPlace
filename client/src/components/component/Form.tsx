@@ -1,31 +1,41 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { FormValues } from "../types/Types";
+import { FormValues, SignInResponseData } from "../types/Types";
 import { signUp, signIn } from "../util/Http";
 import { useMutation } from "@tanstack/react-query";
+import { setCurrentUser } from "../../redux/feature/userSlice";
+import { useDispatch } from "react-redux";
 
 type Mode = { mode: "signUp" | "signIn" };
 
 const Form = ({ mode }: Mode) => {
   const { register, handleSubmit } = useForm<FormValues>();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const mutationOptions =
     mode === "signUp"
       ? {
           mutationFn: signUp,
-          onSuccess: () => navigate("/sign-in"),
+          onSuccess: () => {
+            navigate("/sign-in");
+          },
           onError: () => navigate("/sign-up"),
         }
       : {
           mutationFn: signIn,
-          onSuccess: () => navigate("/"),
+          onSuccess: (data: SignInResponseData) => {
+            dispatch(setCurrentUser(data.user));
+            navigate("/");
+          },
           onError: () => navigate("/sign-in"),
         };
 
   const { mutate, isLoading, isError, error } = useMutation(mutationOptions);
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => mutate(data);
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    mutate(data);
+  };
 
   return (
     <div className="p-3 w-5/6 xl:w-2/6 md:w-6/12 mx-auto ">
