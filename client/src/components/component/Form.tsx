@@ -5,6 +5,7 @@ import { signUp, signIn } from "../util/Http";
 import { useMutation } from "@tanstack/react-query";
 import { setCurrentUser } from "../../redux/feature/userSlice";
 import { useDispatch } from "react-redux";
+import GoogleAuth from "./GoogleAuth";
 
 type Mode = { mode: "signUp" | "signIn" };
 
@@ -78,6 +79,7 @@ const Form = ({ mode }: Mode) => {
         >
           {isLoading ? "Loading..." : mode === "signUp" ? "Sign Up" : "Sign In"}
         </button>
+        <GoogleAuth />
       </form>
       {isError && <p className="mt-4 text-red-500 text-2xl">{(error as Error).message}</p>}
 
