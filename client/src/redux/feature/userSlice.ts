@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { CurrentUser } from "../../components/types/Types";
 
 const initialState = {
-  currentUser: null,
+  currentUser: null as CurrentUser | null,
 };
 
 const userSlice = createSlice({
@@ -17,4 +18,3 @@ const userSlice = createSlice({
 export const { setCurrentUser } = userSlice.actions;
 
 export default userSlice.reducer;
- 

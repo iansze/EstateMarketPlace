@@ -57,20 +57,23 @@ export const signin = async (req, res, next) => {
 export const googleSignin = async (req, res, next) => {
   try {
     //User exisit
-    const user = await User.findOne({ email: req.body.email });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
     if (user) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
         expiresIn: "1h",
       });
-      const { password: userPassword, ...user } = user._doc;
+      const { password: userPassword, ...userDetails } = user._doc;
       res
         .cookie("token", token, { httpOnly: true })
         .status(200)
-        .json({ message: "User logged in successfully", user: user });
+        .json({ message: "User logged in successfully", user: userDetails });
     } else {
       //User does not exisit
       const password = Math.random().toString(36).slice(-8);
       const hasedPassword = await bcrypt.hash(password, 12);
+
       const newUser = new User({
         username: req.body.username,
         email: req.body.email,

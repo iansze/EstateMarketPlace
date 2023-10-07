@@ -8,6 +8,7 @@ import Profile from "./pages/ProfilePage";
 import SignIn from "./pages/SignInPage";
 import SignUp from "./pages/SignUpPage";
 import Header from "./components/component/Header";
+import AuthRoutes from "./components/component/AuthRoutes";
 
 const App: FC = () => {
   return (
@@ -17,9 +18,11 @@ const App: FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route element={<AuthRoutes />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

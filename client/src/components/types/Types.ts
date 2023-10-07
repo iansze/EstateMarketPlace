@@ -8,6 +8,7 @@ export type User = {
   _id: string;
   username: string;
   email: string;
+  photo?: string;
 };
 
 export type SignInResponseData = {
@@ -17,8 +18,16 @@ export type SignInResponseData = {
 
 export type GoogleData = {
   user: {
-    displayName?: string | null;
-    email?: string | null;
-    photoURL?: string | null;
+    displayName: string | null;
+    email: string | null;
+    photoURL: string | null;
   };
+};
+
+export type CurrentUserState = {
+  user: CurrentUser;
+};
+
+export type CurrentUser = {
+  currentUser: SignInResponseData;
 };

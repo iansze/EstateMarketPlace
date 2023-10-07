@@ -34,6 +34,7 @@ export const signIn = async (data: FormValues) => {
       },
       body: JSON.stringify(data),
     });
+    console.log("🚀 ~ file: http.ts:37 ~ signIn ~ res:", res);
     if (!res.ok) {
       const errorData = await res.json();
 
@@ -60,10 +61,13 @@ export const googleSignIn = async (data: GoogleData) => {
         photo: data.user.photoURL,
       }),
     });
+
     if (!res.ok) {
       const errorData = await res.json();
-
       throw new Error(errorData.message);
+    }
+    if (!data.user.displayName || !data.user.email || !data.user.photoURL) {
+      throw new Error("Incomplete user data.");
     }
     const responseData = await res.json();
     return responseData;
