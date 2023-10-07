@@ -56,9 +56,9 @@ export const googleSignIn = async (data: GoogleData) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: data.user.displayName,
-        email: data.user.email,
-        photo: data.user.photoURL,
+        username: data.displayName,
+        email: data.email,
+        photo: data.photoURL,
       }),
     });
 
@@ -66,7 +66,7 @@ export const googleSignIn = async (data: GoogleData) => {
       const errorData = await res.json();
       throw new Error(errorData.message);
     }
-    if (!data.user.displayName || !data.user.email || !data.user.photoURL) {
+    if (!data.displayName || !data.email || !data.photoURL) {
       throw new Error("Incomplete user data.");
     }
     const responseData = await res.json();

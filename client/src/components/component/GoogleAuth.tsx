@@ -15,7 +15,7 @@ const GoogleAuth = () => {
   const { mutate } = useMutation({
     mutationFn: googleSignIn,
     onSuccess: (data: SignInResponseData) => {
-      dispatch(setCurrentUser(data));
+      dispatch(setCurrentUser(data.user));
       navigate("/");
     },
     onError: () => navigate("/sign-in"),
@@ -30,15 +30,8 @@ const GoogleAuth = () => {
 
       const { displayName, email, photoURL } = result.user;
 
-      const data: GoogleData = {
-        user: {
-          displayName,
-          email,
-          photoURL,
-        },
-      };
+      const data: GoogleData = { displayName, email, photoURL };
       mutate(data);
-      console.log("🚀 ~ file: GoogleAuth.tsx:41 ~ handleGoogleAuth ~ data:", data);
     } catch (err) {
       console.log(err);
     }

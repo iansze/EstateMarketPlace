@@ -1,11 +1,10 @@
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { CurrentUserState } from "../types/Types";
+import { RootState } from "../types/Types";
 
 const Header = () => {
-  const { user } = useSelector((state: CurrentUserState) => state.user.currentUser);
-  console.log("🚀 ~ file: Header.tsx:8 ~ Header ~ currentUser:", user);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
 
   return (
     <header className=" bg-slate-200 shadow-sm ">
@@ -31,9 +30,17 @@ const Header = () => {
               About
             </li>
           </Link>
-          {user ? (
+          {currentUser ? (
             <Link to="profile">
-              <img src={user.photo} className="rounded-full h-7 w-7 object-cover" alt="photo" />
+              {currentUser.photo === "" ? (
+                currentUser.username
+              ) : (
+                <img
+                  src={currentUser.photo}
+                  alt="user photo"
+                  className="rounded-full mx-auto h-7 w-7"
+                />
+              )}
             </Link>
           ) : (
             <Link to="sign-in">

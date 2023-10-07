@@ -88,7 +88,7 @@ export const googleSignin = async (req, res, next) => {
       res
         .cookie("token", token, { httpOnly: true })
         .status(200)
-        .json({ message: "User logged in successfully", user: user });
+        .json({ message: "User logged in successfully", user });
     }
   } catch (err) {
     next(err);

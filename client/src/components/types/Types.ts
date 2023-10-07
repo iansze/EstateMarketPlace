@@ -17,17 +17,15 @@ export type SignInResponseData = {
 };
 
 export type GoogleData = {
-  user: {
-    displayName: string | null;
-    email: string | null;
-    photoURL: string | null;
-  };
+  displayName: string | null;
+  email: string | null;
+  photoURL: string | null;
 };
 
 export type CurrentUserState = {
-  user: CurrentUser;
+  currentUser: User;
 };
 
-export type CurrentUser = {
-  currentUser: SignInResponseData;
+export type RootState = {
+  user: CurrentUserState;
 };

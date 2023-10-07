@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
-import { CurrentUserState } from "../types/Types";
+import { RootState } from "../types/Types";
 import { useEffect } from "react";
 
 const AuthRoutes = () => {
   const navigate = useNavigate();
-  const { currentUser } = useSelector((state: CurrentUserState) => state.user);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+
   useEffect(() => {
     if (!currentUser) {
       navigate("/sign-in");
