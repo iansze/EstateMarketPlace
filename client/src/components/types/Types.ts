@@ -1,7 +1,9 @@
 export type FormValues = {
+  _id?: string;
   username?: string;
-  password: string;
-  email: string;
+  password?: string;
+  email?: string;
+  photo?: string;
 };
 
 export type User = {

@@ -25,6 +25,30 @@ export const signUp = async (data: FormValues) => {
   }
 };
 
+export const updateUser = async (data: FormValues, id: string) => {
+  try {
+    const res = await fetch(`/api/user/update/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+
+      throw new Error(errorData.message);
+    }
+    const responseData = await res.json();
+    console.log("🚀 ~ file: http.ts:44 ~ updateUser ~ responseData:", responseData);
+    return responseData;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
 export const signIn = async (data: FormValues) => {
   try {
     const res = await fetch("/api/auth/signin", {
@@ -34,7 +58,7 @@ export const signIn = async (data: FormValues) => {
       },
       body: JSON.stringify(data),
     });
-    console.log("🚀 ~ file: http.ts:37 ~ signIn ~ res:", res);
+
     if (!res.ok) {
       const errorData = await res.json();
 
