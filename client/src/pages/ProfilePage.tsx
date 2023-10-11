@@ -1,9 +1,11 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Form from "../components/component/Form";
 import { RootState } from "../components/types/Types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
+import { deleteUser } from "../components/util/Http";
+import { setCurrentUser } from "../redux/feature/userSlice";
 
 const ProfilePage = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
@@ -12,6 +14,7 @@ const ProfilePage = () => {
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [imageURL, setImageURL] = useState<string>("");
   const [uploadError, setUploadError] = useState<string>("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (file) {
@@ -77,6 +80,11 @@ const ProfilePage = () => {
     }
   };
 
+  const deleteUserHandler = () => {
+    deleteUser(currentUser._id);
+    dispatch(setCurrentUser(null));
+  };
+
   return (
     <>
       <input type="file" ref={fileRef} hidden accept="image/*" onChange={fileSubmitHandler} />
@@ -100,7 +108,9 @@ const ProfilePage = () => {
         email={currentUser.email}
       />
       <div className="flex justify-between mt-5 p-3 w-5/6 xl:w-2/6 md:w-6/12 mx-auto ">
-        <span className="cursor-pointer text-red-600">Delete Account</span>
+        <span className="cursor-pointer text-red-600" onClick={deleteUserHandler}>
+          Delete Account
+        </span>
         <span className="cursor-pointer text-red-600">Sign Out</span>
       </div>
     </>

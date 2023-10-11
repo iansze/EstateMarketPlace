@@ -40,3 +40,16 @@ export const updateProfile = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+export const deleteUsers = async (req, res) => {
+  if (req.userId !== req.params.id) {
+    return res.status(401).json({ message: "You can only delete your profile" });
+  }
+  try {
+    await User.findByIdAndDelete(req.userId);
+    res.clearCookie("token");
+    return res.status(200).json({ message: "User deleted successfully!" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
