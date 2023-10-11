@@ -4,7 +4,7 @@ import { RootState } from "../components/types/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
-import { deleteUser } from "../components/util/Http";
+import { deleteUser, signOut } from "../components/util/Http";
 import { setCurrentUser } from "../redux/feature/userSlice";
 
 const ProfilePage = () => {
@@ -85,6 +85,11 @@ const ProfilePage = () => {
     dispatch(setCurrentUser(null));
   };
 
+  const signOutHandler = () => {
+    signOut();
+    dispatch(setCurrentUser(null));
+  };
+
   return (
     <>
       <input type="file" ref={fileRef} hidden accept="image/*" onChange={fileSubmitHandler} />
@@ -111,7 +116,9 @@ const ProfilePage = () => {
         <span className="cursor-pointer text-red-600" onClick={deleteUserHandler}>
           Delete Account
         </span>
-        <span className="cursor-pointer text-red-600">Sign Out</span>
+        <span className="cursor-pointer text-red-600" onClick={signOutHandler}>
+          Sign Out
+        </span>
       </div>
     </>
   );

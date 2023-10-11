@@ -121,3 +121,21 @@ export const deleteUser = async (id: string) => {
     throw err;
   }
 };
+
+export const signOut = async () => {
+  try {
+    const res = await fetch("/api/auth/logout", {
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message);
+    }
+    const responseData = await res.json();
+    return responseData;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
