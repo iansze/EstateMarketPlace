@@ -1,4 +1,4 @@
-import { FormValues, GoogleData } from "../types/Types";
+import { FormValues, GoogleData, ListingPost } from "../types/Types";
 import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient();
@@ -64,7 +64,10 @@ export const updateUser = async (data: FormValues, id: string) => {
       throw new Error(errorData.message);
     }
     const responseData = await res.json();
-    console.log("🚀 ~ file: http.ts:44 ~ updateUser ~ responseData:", responseData);
+    console.log(
+      "🚀 ~ file: http.ts:44 ~ updateUser ~ responseData:",
+      responseData,
+    );
     return responseData;
   } catch (err) {
     console.error(err);
@@ -113,7 +116,10 @@ export const deleteUser = async (id: string) => {
       throw new Error(errorData.message);
     }
     const responseData = await res.json();
-    console.log("🚀 ~ file: http.ts:116 ~ deleteUser ~ responseData:", responseData);
+    console.log(
+      "🚀 ~ file: http.ts:116 ~ deleteUser ~ responseData:",
+      responseData,
+    );
 
     return responseData;
   } catch (err) {
@@ -138,4 +144,8 @@ export const signOut = async () => {
     console.error(err);
     throw err;
   }
+};
+
+export const createListing = async (data: ListingPost) => {
+  console.log("🚀 ~ file: http.ts:145 ~ data:", data);
 };

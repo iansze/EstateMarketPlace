@@ -8,7 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import GoogleAuth from "./GoogleAuth";
 
 type Mode = { mode: "signUp" | "signIn" | "update" };
-type FormProps = Mode & { photoURL?: string; username?: string; email?: string; password?: string };
+type FormProps = Mode & {
+  photoURL?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+};
 
 const Form = ({ mode, photoURL, username, email }: FormProps) => {
   const { register, handleSubmit } = useForm<FormValues>();
@@ -41,7 +46,9 @@ const Form = ({ mode, photoURL, username, email }: FormProps) => {
     },
   };
 
-  const { mutate, isLoading, isError, error } = useMutation(mutationOptions[mode]);
+  const { mutate, isLoading, isError, error } = useMutation(
+    mutationOptions[mode],
+  );
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     data = { ...data, photo: photoURL, _id: userId };
@@ -49,8 +56,8 @@ const Form = ({ mode, photoURL, username, email }: FormProps) => {
   };
 
   return (
-    <div className="p-3 w-5/6 xl:w-2/6 md:w-6/12 mx-auto ">
-      <h1 className="text-3xl text-center font-semibold my-12">
+    <div className="mx-auto w-5/6 p-3 md:w-6/12 xl:w-2/6 ">
+      <h1 className="my-12 text-center text-3xl font-semibold">
         {
           {
             signUp: "Sign Up",
@@ -91,7 +98,7 @@ const Form = ({ mode, photoURL, username, email }: FormProps) => {
         <button
           type="submit"
           disabled={isLoading}
-          className={`rounded-lg border-2 border-solid p-2 cursor-pointer bg-slate-500 text-white hover:bg-slate-200 hover:text-black ${
+          className={`cursor-pointer rounded-lg border-2 border-solid bg-slate-500 p-2 text-white hover:bg-slate-200 hover:text-black ${
             isLoading ? " disabled:opacity-70" : ""
           } `}
         >
@@ -102,13 +109,23 @@ const Form = ({ mode, photoURL, username, email }: FormProps) => {
         {/*Goole Login*/}
         {(mode === "signUp" || mode === "signIn") && <GoogleAuth />}
       </form>
-      {isError && <p className="mt-4 text-red-500 text-2xl">{(error as Error).message}</p>}
+      {isError && (
+        <p className="mt-4 text-2xl text-red-500">{(error as Error).message}</p>
+      )}
 
       {(mode === "signUp" || mode === "signIn") && (
-        <div className="flex gap-2 mt-5">
-          <p className="">{mode === "signUp" ? "Have an account?" : "Don't have an account?"}</p>
-          <Link to={mode === "signUp" ? "/sign-in" : "/sign-up"} className="hover:underline">
-            <span className="text-blue-400"> {mode === "signUp" ? "Sign In" : "Sign Up"}</span>
+        <div className="mt-5 flex gap-2">
+          <p className="">
+            {mode === "signUp" ? "Have an account?" : "Don't have an account?"}
+          </p>
+          <Link
+            to={mode === "signUp" ? "/sign-in" : "/sign-up"}
+            className="hover:underline"
+          >
+            <span className="text-blue-400">
+              {" "}
+              {mode === "signUp" ? "Sign In" : "Sign Up"}
+            </span>
           </Link>
         </div>
       )}

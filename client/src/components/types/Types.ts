@@ -31,3 +31,21 @@ export type CurrentUserState = {
 export type RootState = {
   user: CurrentUserState;
 };
+
+export type ListingPost = {
+  name: string;
+  description: string;
+  address: string;
+  price: number;
+  discountedPrice: number;
+  baths: number;
+  beds: number;
+  sell: boolean;
+  rent: boolean;
+  furnished: boolean;
+  parking: boolean;
+  type: string;
+  offer: boolean;
+  images: string[];
+  userRef: string;
+};

@@ -2,10 +2,16 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Form from "../components/component/Form";
 import { RootState } from "../components/types/Types";
 import { useDispatch, useSelector } from "react-redux";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { app } from "../firebase";
 import { deleteUser, signOut } from "../components/util/Http";
 import { setCurrentUser } from "../redux/feature/userSlice";
+import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
@@ -31,7 +37,8 @@ const ProfilePage = () => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setUploadProgress(Math.round(progress));
       },
       (error) => {
@@ -43,7 +50,7 @@ const ProfilePage = () => {
 
           setUploadError("");
         });
-      }
+      },
     );
   };
 
@@ -58,14 +65,14 @@ const ProfilePage = () => {
   const uploadMessgae = () => {
     if (uploadError) {
       return (
-        <div className="text-red-600 mt-5 p-3 w-5/6 xl:w-2/6 md:w-6/12 mx-auto text-center text-2xl">
+        <div className="mx-auto mt-5 w-5/6 p-3 text-center text-2xl text-red-600 md:w-6/12 xl:w-2/6">
           User does not have permission to upload this file
         </div>
       );
     } else {
       if (uploadProgress > 0 && uploadProgress < 100) {
         return (
-          <div className="text-green-600  mt-5 p-3 w-5/6 xl:w-2/6 md:w-6/12 mx-auto text-center text-2xl">
+          <div className="mx-auto  mt-5 w-5/6 p-3 text-center text-2xl text-green-600 md:w-6/12 xl:w-2/6">
             Uploaded {uploadProgress}%
           </div>
         );
@@ -73,7 +80,7 @@ const ProfilePage = () => {
     }
     if (uploadProgress === 100) {
       return (
-        <div className="text-green-600 mt-5 p-3 w-5/6 xl:w-2/6 md:w-6/12 mx-auto text-center text-2xl">
+        <div className="mx-auto mt-5 w-5/6 p-3 text-center text-2xl text-green-600 md:w-6/12 xl:w-2/6">
           Uploaded Successfully
         </div>
       );
@@ -92,16 +99,22 @@ const ProfilePage = () => {
 
   return (
     <>
-      <input type="file" ref={fileRef} hidden accept="image/*" onChange={fileSubmitHandler} />
+      <input
+        type="file"
+        ref={fileRef}
+        hidden
+        accept="image/*"
+        onChange={fileSubmitHandler}
+      />
       {currentUser.photo !== "" ? (
         <img
           onClick={() => fileRef.current?.click()}
           src={imageURL || currentUser.photo}
           alt="user photo"
-          className="rounded-full mx-auto mt-20 cursor-pointer h-64 w-64"
+          className="mx-auto mt-20 h-64 w-64 cursor-pointer rounded-full"
         />
       ) : (
-        <div className="mx-auto mt-20 bg-gray-500 w-36 h-36 rounded-full flex items-center justify-center text-white text-3xl">
+        <div className=" mx-auto mt-20 flex h-36 w-36 items-center justify-center rounded-full bg-gray-500 text-3xl text-white">
           ?
         </div>
       )}
@@ -112,13 +125,28 @@ const ProfilePage = () => {
         username={currentUser.username}
         email={currentUser.email}
       />
-      <div className="flex justify-between mt-5 p-3 w-5/6 xl:w-2/6 md:w-6/12 mx-auto ">
-        <span className="cursor-pointer text-red-600" onClick={deleteUserHandler}>
-          Delete Account
-        </span>
-        <span className="cursor-pointer text-red-600" onClick={signOutHandler}>
-          Sign Out
-        </span>
+
+      <div className="mx-auto mt-3 flex w-5/6 flex-col justify-center p-3 md:w-6/12 xl:w-2/6 ">
+        <Link
+          to={"/create-listing"}
+          className="mx-auto w-full cursor-pointer rounded-lg border-2 border-solid bg-slate-500 p-2 text-center text-white hover:bg-slate-200 hover:text-black"
+        >
+          Create Listing
+        </Link>
+        <div className="mx-auto mt-5 flex w-full justify-between p-3">
+          <span
+            className="cursor-pointer text-red-600"
+            onClick={deleteUserHandler}
+          >
+            Delete Account
+          </span>
+          <span
+            className="cursor-pointer text-red-600"
+            onClick={signOutHandler}
+          >
+            Sign Out
+          </span>
+        </div>
       </div>
     </>
   );

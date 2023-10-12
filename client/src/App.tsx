@@ -7,6 +7,7 @@ import About from "./pages/AboutPage";
 import Profile from "./pages/ProfilePage";
 import SignIn from "./pages/SignInPage";
 import SignUp from "./pages/SignUpPage";
+import CreateListing from "./pages/CreateListingPage";
 import Header from "./components/component/Header";
 import AuthRoutes from "./components/component/AuthRoutes";
 
@@ -22,6 +23,7 @@ const App: FC = () => {
           <Route path="/sign-up" element={<SignUp />} />
           <Route element={<AuthRoutes />}>
             <Route path="/profile" element={<Profile />} />
+            <Route path="/create-listing" element={<CreateListing />} />
           </Route>
         </Routes>
       </BrowserRouter>
