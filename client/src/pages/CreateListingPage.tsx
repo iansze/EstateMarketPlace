@@ -3,15 +3,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ListingPost } from "../components/types/Types";
 import { createListing } from "../components/util/Http";
-import { CheckboxInput } from "../components/component/CheckBox";
+import { CheckboxInput } from "../components/component/form/CheckBox";
 import { ChangeEvent, useState } from "react";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { app } from "../firebase";
+import { storeImage } from "../components/component/form/UploadImage";
+import LabelledInput from "../components/component/form/LabelInput";
+import Input from "../components/component/form/Input";
 
 const CreateListingPage = () => {
   const checkboxItems = ["sell", "rent", "parking", "furnished", "offer"];
@@ -43,7 +39,7 @@ const CreateListingPage = () => {
       const promises = [];
 
       for (let i = 0; i < image.length; i++) {
-        promises.push(storeImage(image[i]));
+        promises.push(storeImage({ image: image[i] }));
       }
       Promise.all(promises)
         .then((urls) => {
@@ -53,31 +49,6 @@ const CreateListingPage = () => {
           console.log(err);
         });
     }
-  };
-
-  const storeImage = async (image: File) => {
-    return new Promise((resolve, reject) => {
-      const storage = getStorage(app);
-      const fileName = new Date().getTime() + image.name;
-      const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, image);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
-        },
-        (error) => {
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            resolve(downloadURL);
-          });
-        },
-      );
-    });
   };
 
   const onSubmit: SubmitHandler<ListingPost> = async (data) => {
@@ -95,28 +66,29 @@ const CreateListingPage = () => {
       >
         {/* Listing details  */}
         <div className="flex flex-1 flex-col gap-4 ">
-          <div className="flex flex-col gap-4 ">
-            <input
-              type="text"
-              placeholder="Name"
-              required
-              {...register("name")}
-              className="rounded-md border-2 border-solid p-2"
-            />
-            <textarea
-              cols={30}
-              rows={10}
-              placeholder="Description"
-              {...register("description")}
-              className="rounded-md border-2 border-solid p-2"
-            />
-            <input
-              type="text"
-              placeholder="Address"
-              {...register("address")}
-              className="rounded-md border-2 border-solid p-2"
-            />
-          </div>
+          <Input
+            id="name"
+            type="text"
+            placeholder="Name"
+            required
+            {...register("name")}
+          />
+          <textarea
+            id="description"
+            cols={30}
+            rows={10}
+            placeholder="Description"
+            {...register("description")}
+            className="rounded-md border-2 border-solid p-2"
+          />
+          <Input
+            id="address"
+            type="text"
+            placeholder="Address"
+            required
+            {...register("address")}
+          />
+
           {/* CheckBox */}
           <div className="flex flex-wrap gap-4 ">
             {checkboxItems.map((item) => (
@@ -127,58 +99,44 @@ const CreateListingPage = () => {
               />
             ))}
           </div>
+
           {/* Bed section  */}
           <div className="flex flex-wrap gap-4">
-            <div className="flex items-center gap-2 ">
-              <input
-                {...register("beds")}
-                type="number"
-                name="beds"
-                required
-                min={1}
-                max={10}
-                className="rounded-md border-2 border-solid p-2"
-              />
-              <label htmlFor="beds">Beds</label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                {...register("baths")}
-                type="number"
-                name="baths"
-                min={1}
-                max={10}
-                required
-                className="rounded-md border-2 border-solid p-2"
-              />
-              <label htmlFor="baths">Baths</label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                {...register("price")}
-                type="number"
-                name="price"
-                required
-                className="rounded-md border-2 border-solid p-2"
-              />
-              <label htmlFor="price">
-                <p className="">Regular Price</p>
-                <span className="text-xs">($ /Month)</span>
-              </label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                {...register("discountedPrice")}
-                type="number"
-                name="discountedPrice"
-                required
-                className="rounded-md border-2 border-solid p-2"
-              />
-              <label htmlFor="discountedPrice">
-                <p className="">Discounted Price</p>
-                <span className="text-xs">($ /Month)</span>
-              </label>
-            </div>
+            <LabelledInput
+              label="Beds"
+              type="number"
+              id="beds"
+              min={1}
+              max={10}
+              required
+              {...register("beds")}
+            />
+            <LabelledInput
+              label="Baths"
+              type="number"
+              id="baths"
+              min={1}
+              max={10}
+              required
+              {...register("baths")}
+            />
+
+            <LabelledInput
+              label="Regular Price"
+              type="number"
+              id="price"
+              subLabel="($ /Month)"
+              required
+              {...register("price")}
+            />
+            <LabelledInput
+              label="Discounted Price"
+              type="number"
+              id="discountedPrice"
+              subLabel="($ /Month)"
+              required
+              {...register("discountedPrice")}
+            />
           </div>
         </div>
         {/* Upload image  */}

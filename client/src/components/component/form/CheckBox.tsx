@@ -1,5 +1,5 @@
 import { UseFormRegister } from "react-hook-form";
-import { ListingPost } from "../types/Types";
+import { ListingPost } from "../../types/Types";
 
 type CheckboxInputProps = {
   register: UseFormRegister<ListingPost>;
@@ -16,7 +16,7 @@ export const CheckboxInput = ({
       className="w-5"
       type="checkbox"
       {...register(name)}
-      name={name}
+      id={name}
       {...props}
     />
     <label htmlFor={name}>{name.charAt(0).toUpperCase() + name.slice(1)}</label>

@@ -1,4 +1,4 @@
-import Form from "../components/component/Form";
+import Form from "../components/component/form/Form";
 
 const SignInPage = () => {
   return <Form mode="signIn" />;

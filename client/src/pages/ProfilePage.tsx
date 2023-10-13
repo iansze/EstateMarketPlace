@@ -1,14 +1,8 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import Form from "../components/component/Form";
+import Form from "../components/component/form/Form";
 import { RootState } from "../components/types/Types";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { app } from "../firebase";
+import { storeImage } from "../components/component/form/UploadImage";
 import { deleteUser, signOut } from "../components/util/Http";
 import { setCurrentUser } from "../redux/feature/userSlice";
 import { Link } from "react-router-dom";
@@ -23,36 +17,24 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (file) {
-      fileUploadHandler(file);
-    }
-  }, [file]);
-
-  const fileUploadHandler = (file: File) => {
-    const storage = getStorage(app);
-    const fileName = new Date().getTime() + file.name;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploadProgress(Math.round(progress));
-      },
-      (error) => {
-        setUploadError(error.message);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageURL(downloadURL);
-
+    const uploadFile = async () => {
+      if (file) {
+        try {
+          const downloadUrl = await storeImage({
+            image: file,
+            onProgress: setUploadProgress,
+          });
+          setImageURL(downloadUrl);
           setUploadError("");
-        });
-      },
-    );
-  };
+        } catch (error) {
+          setUploadError((error as Error).message);
+          console.error("Failed to upload file:", error);
+        }
+      }
+    };
+
+    uploadFile();
+  }, [file]);
 
   const fileSubmitHandler = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

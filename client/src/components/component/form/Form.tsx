@@ -1,11 +1,11 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { FormValues, RootState, SignInResponseData } from "../types/Types";
-import { signUp, signIn, updateUser } from "../util/Http";
+import { FormValues, RootState, SignInResponseData } from "../../types/Types";
+import { signUp, signIn, updateUser } from "../../util/Http";
 import { useMutation } from "@tanstack/react-query";
-import { setCurrentUser } from "../../redux/feature/userSlice";
+import { setCurrentUser } from "../../../redux/feature/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import GoogleAuth from "./GoogleAuth";
+import GoogleAuth from "../GoogleAuth";
 
 type Mode = { mode: "signUp" | "signIn" | "update" };
 type FormProps = Mode & {
