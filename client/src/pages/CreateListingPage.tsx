@@ -4,14 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { ListingPost } from "../components/types/Types";
 import { createListing } from "../components/util/Http";
 import { CheckboxInput } from "../components/component/form/CheckBox";
-import { ChangeEvent, useState } from "react";
-import { storeImage } from "../components/component/form/UploadImage";
+import { useState } from "react";
 import LabelledInput from "../components/component/form/LabelInput";
 import Input from "../components/component/form/Input";
+import ImageUploader from "../components/component/ImageUploader";
 
 const CreateListingPage = () => {
   const checkboxItems = ["sell", "rent", "parking", "furnished", "offer"];
-  const [image, setImage] = useState<File[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   const navigate = useNavigate();
@@ -27,28 +26,8 @@ const CreateListingPage = () => {
     onError: () => navigate("/sign-in"),
   });
 
-  const imageUploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const selectedFiles = Array.from(e.target.files) as File[];
-      setImage((prevImages) => [...prevImages, ...selectedFiles]);
-    }
-  };
-
-  const imageSubmitHandler = () => {
-    if (image.length > 0 && image.length < 7) {
-      const promises = [];
-
-      for (let i = 0; i < image.length; i++) {
-        promises.push(storeImage({ image: image[i] }));
-      }
-      Promise.all(promises)
-        .then((urls) => {
-          setImageUrls((prevUrls) => [...prevUrls, ...urls] as string[]);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+  const handleUploadSuccess = (urls: string[]) => {
+    setImageUrls((prevUrls) => [...prevUrls, ...urls]);
   };
 
   const onSubmit: SubmitHandler<ListingPost> = async (data) => {
@@ -120,7 +99,6 @@ const CreateListingPage = () => {
               required
               {...register("baths")}
             />
-
             <LabelledInput
               label="Regular Price"
               type="number"
@@ -139,29 +117,11 @@ const CreateListingPage = () => {
             />
           </div>
         </div>
-        {/* Upload image  */}
+
         <div>
-          <p className="font-semibold">
-            Images:
-            <span> The first image will be the cover (max 6)</span>
-          </p>
-          <div className="mt-2 flex flex-wrap gap-4">
-            <input
-              onChange={imageUploadHandler}
-              type="file"
-              name="image"
-              accept="image/*"
-              multiple
-              className="rounded-md border-2 border-solid p-3 "
-            />
-            <button
-              type="button"
-              onClick={imageSubmitHandler}
-              className="rounded-md border-2 border-solid bg-sky-700 p-3 text-white"
-            >
-              Upload
-            </button>
-          </div>
+          {/* Upload image  */}
+          <ImageUploader onUploadSuccess={handleUploadSuccess} />
+          {/* Submit button */}
           <button
             type="submit"
             disabled={isLoading}
@@ -172,7 +132,6 @@ const CreateListingPage = () => {
             {isLoading ? "Loading..." : "Create Listing"}
           </button>
         </div>
-        {/* Submit button */}
       </form>
     </main>
   );

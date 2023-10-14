@@ -1,4 +1,4 @@
-import Form from "../components/component/form/Form";
+import Form from "../components/component/Form";
 
 const SignUpPage = () => {
   return <Form mode="signUp" />;

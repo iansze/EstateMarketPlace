@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import Form from "../components/component/form/Form";
+import Form from "../components/component/Form";
 import { RootState } from "../components/types/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { storeImage } from "../components/component/form/UploadImage";
