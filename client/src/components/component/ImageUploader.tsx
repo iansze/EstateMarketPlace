@@ -8,6 +8,7 @@ type ImageUploaderProps = {
 export const ImageUploader = ({ onUploadSuccess }: ImageUploaderProps) => {
   const [image, setImage] = useState<File[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [uploadProgress, setUploadProgress] = useState<boolean>(false);
 
   const imageUploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -18,14 +19,17 @@ export const ImageUploader = ({ onUploadSuccess }: ImageUploaderProps) => {
 
   const imageSubmitHandler = async () => {
     if (image.length > 0 && image.length < 7) {
+      setUploadProgress(true);
       try {
         const urls = await Promise.all(
           image.map((img) => storeImage({ image: img })),
         );
         setImageUrls((prevUrls) => [...prevUrls, ...urls]);
         onUploadSuccess(urls);
+        setUploadProgress(false);
       } catch (err) {
         alert(err);
+        setUploadProgress(false);
       }
     } else {
       alert("Please select up to 6 images");
@@ -56,7 +60,7 @@ export const ImageUploader = ({ onUploadSuccess }: ImageUploaderProps) => {
           onClick={imageSubmitHandler}
           className="rounded-md border-2 border-solid bg-sky-700 p-3 text-white"
         >
-          Upload
+          {uploadProgress ? "Uploading..." : "Upload"}
         </button>
         <div className="flex w-full flex-col gap-4 ">
           {imageUrls.length > 0 &&

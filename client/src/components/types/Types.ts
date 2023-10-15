@@ -33,6 +33,7 @@ export type RootState = {
 };
 
 export type ListingPost = {
+  _id?: string;
   name: string;
   description: string;
   address: string;

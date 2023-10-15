@@ -14,19 +14,18 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    regularPrice: {
+    price: {
       type: Number,
       required: true,
     },
-    discountPrice: {
+    discountedPrice: {
+      type: Number,
+    },
+    baths: {
       type: Number,
       required: true,
     },
-    bathrooms: {
-      type: Number,
-      required: true,
-    },
-    bedrooms: {
+    beds: {
       type: Number,
       required: true,
     },
@@ -38,15 +37,11 @@ const listingSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    type: {
-      type: String,
-      required: true,
-    },
     offer: {
       type: Boolean,
       required: true,
     },
-    imageUrls: {
+    images: {
       type: Array,
       required: true,
     },

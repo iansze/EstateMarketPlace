@@ -15,7 +15,7 @@ type FormProps = Mode & {
   password?: string;
 };
 
-const Form = ({ mode, photoURL, username, email }: FormProps) => {
+const AuthForm = ({ mode, photoURL, username, email }: FormProps) => {
   const { register, handleSubmit } = useForm<FormValues>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -133,4 +133,4 @@ const Form = ({ mode, photoURL, username, email }: FormProps) => {
   );
 };
 
-export default Form;
+export default AuthForm;

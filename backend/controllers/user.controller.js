@@ -1,3 +1,4 @@
+import Listing from "../models/listing.model.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 
@@ -49,6 +50,19 @@ export const deleteUsers = async (req, res) => {
     await User.findByIdAndDelete(req.userId);
     res.clearCookie("token");
     return res.status(200).json({ message: "User deleted successfully!" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export const getListingByUser = async (req, res) => {
+  //req.userId come from the auth middleware = jwt
+  if (req.userId !== req.params.id) {
+    return res.status(401).json({ message: "You can only view your listing" });
+  }
+  try {
+    const listing = await Listing.find({ userRef: req.userId });
+    return res.status(200).json({ listing });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

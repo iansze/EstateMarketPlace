@@ -39,9 +39,7 @@ export const signin = async (req, res, next) => {
     if (!isVaildPassword) {
       return res.status(401).json({ message: "Invalid password" });
     }
-    const token = jwt.sign({ id: isVaildUser._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign({ id: isVaildUser._id }, process.env.JWT_SECRET_KEY);
     //Destructuring to create two variables
     //password property will be assigned to the userPassword
     const { password: userPassword, ...user } = isVaildUser._doc;
@@ -81,9 +79,7 @@ export const googleSignin = async (req, res, next) => {
         photo: req.body.photo,
       });
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, {
-        expiresIn: "1h",
-      });
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, {});
       const { password: userPassword, ...user } = newUser._doc;
       res
         .cookie("token", token, { httpOnly: true })

@@ -147,5 +147,63 @@ export const signOut = async () => {
 };
 
 export const createListing = async (data: ListingPost) => {
-  console.log("🚀 ~ file: http.ts:145 ~ data:", data);
+  try {
+    const res = await fetch("/api/listing/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+
+      throw new Error(errorData.message);
+    }
+    const responseData = await res.json();
+    return responseData;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const getListingByUser = async (id: string) => {
+  try {
+    const res = await fetch(`/api/user/listing/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+
+      throw new Error(errorData.message);
+    }
+    const responseData = await res.json();
+    return responseData;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const deleteListing = async (id: string) => {
+  try {
+    const res = await fetch(`/api/listing/delete/${id}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message);
+    }
+    const responseData = await res.json();
+    return responseData;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };

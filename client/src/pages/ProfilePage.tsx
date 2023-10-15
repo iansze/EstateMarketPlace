@@ -1,11 +1,12 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import Form from "../components/component/Form";
+import AuthForm from "../components/component/AuthForm";
 import { RootState } from "../components/types/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { storeImage } from "../components/component/form/UploadImage";
 import { deleteUser, signOut } from "../components/util/Http";
 import { setCurrentUser } from "../redux/feature/userSlice";
 import { Link } from "react-router-dom";
+import ProfileListing from "../components/component/ProfileListing";
 
 const ProfilePage = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
@@ -101,7 +102,7 @@ const ProfilePage = () => {
         </div>
       )}
       {uploadMessgae()}
-      <Form
+      <AuthForm
         mode="update"
         photoURL={imageURL}
         username={currentUser.username}
@@ -130,6 +131,7 @@ const ProfilePage = () => {
           </span>
         </div>
       </div>
+      <ProfileListing></ProfileListing>
     </>
   );
 };

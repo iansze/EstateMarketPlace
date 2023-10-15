@@ -1,20 +1,21 @@
 import { useMutation } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { ListingPost } from "../components/types/Types";
+import { ListingPost, RootState } from "../components/types/Types";
 import { createListing } from "../components/util/Http";
 import { CheckboxInput } from "../components/component/form/CheckBox";
 import { useState } from "react";
 import LabelledInput from "../components/component/form/LabelInput";
 import Input from "../components/component/form/Input";
 import ImageUploader from "../components/component/ImageUploader";
+import { useSelector } from "react-redux";
 
 const CreateListingPage = () => {
+  const navigate = useNavigate();
   const checkboxItems = ["sell", "rent", "parking", "furnished", "offer"];
   const [imageUrls, setImageUrls] = useState<string[]>([]);
-
-  const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<ListingPost>();
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const { register, handleSubmit, watch } = useForm<ListingPost>();
   const { mutate, isLoading } = useMutation({
     mutationFn: createListing,
     onSuccess: (data) => {
@@ -22,9 +23,12 @@ const CreateListingPage = () => {
         "🚀 ~ file: CreateListingPage.tsx:15 ~ CreateListingPage ~ data:",
         data,
       );
+      navigate("/profile");
     },
     onError: () => navigate("/sign-in"),
   });
+
+  const isOfferChecked = watch("offer");
 
   const handleUploadSuccess = (urls: string[]) => {
     setImageUrls((prevUrls) => [...prevUrls, ...urls]);
@@ -32,7 +36,13 @@ const CreateListingPage = () => {
 
   const onSubmit: SubmitHandler<ListingPost> = async (data) => {
     data.images = imageUrls;
-    console.log(data);
+    data.userRef = currentUser._id;
+
+    if (Number(data.discountedPrice) > Number(data.price)) {
+      alert("Discounted price cannot be greater than regular price");
+      return;
+    }
+
     mutate(data);
   };
 
@@ -41,10 +51,10 @@ const CreateListingPage = () => {
       <h1 className="text-center text-3xl font-bold">Create a Listing</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mx-auto mt-7 flex w-5/6 flex-1 flex-col gap-8 sm:flex-row"
+        className="mx-auto mt-7 flex w-5/6 flex-1 flex-col gap-8 md:flex-row"
       >
         {/* Listing details  */}
-        <div className="flex flex-1 flex-col gap-4 ">
+        <div className="flex min-w-[300px] flex-1 flex-col gap-4">
           <Input
             id="name"
             type="text"
@@ -107,14 +117,16 @@ const CreateListingPage = () => {
               required
               {...register("price")}
             />
-            <LabelledInput
-              label="Discounted Price"
-              type="number"
-              id="discountedPrice"
-              subLabel="($ /Month)"
-              required
-              {...register("discountedPrice")}
-            />
+            {isOfferChecked && (
+              <LabelledInput
+                label="Discounted Price"
+                type="number"
+                id="discountedPrice"
+                subLabel="($ /Month)"
+                required
+                {...register("discountedPrice")}
+              />
+            )}
           </div>
         </div>
 
@@ -125,7 +137,7 @@ const CreateListingPage = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`mt-5 w-full cursor-pointer rounded-lg border-2 border-solid bg-slate-500 p-2 text-white hover:bg-slate-200 hover:text-black ${
+            className={`my-5 w-full cursor-pointer rounded-lg border-2 border-solid bg-slate-500 p-2 text-white hover:bg-slate-200 hover:text-black ${
               isLoading ? " disabled:opacity-70" : ""
             } `}
           >
