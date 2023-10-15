@@ -34,7 +34,7 @@ export type RootState = {
 
 export type ListingPost = {
   _id?: string;
-  name: string;
+  listName: string;
   description: string;
   address: string;
   price: number;

@@ -68,7 +68,7 @@ const ProfileListing = () => {
                   alt=""
                   className="h-20 w-20 object-contain"
                 />
-                <p className="text-lg font-semibold">{listing.name}</p>
+                <p className="text-lg font-semibold">{listing.listName}</p>
               </Link>
             </div>
 

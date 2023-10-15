@@ -60,7 +60,7 @@ const CreateListingPage = () => {
             type="text"
             placeholder="Name"
             required
-            {...register("name")}
+            {...register("listName")}
           />
           <textarea
             id="description"

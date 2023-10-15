@@ -13,7 +13,7 @@ export const ImageUploader = ({ onUploadSuccess }: ImageUploaderProps) => {
   const imageUploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files) as File[];
-      setImage((prevImages) => [...prevImages, ...selectedFiles]);
+      setImage(selectedFiles);
     }
   };
 
@@ -37,6 +37,11 @@ export const ImageUploader = ({ onUploadSuccess }: ImageUploaderProps) => {
   };
 
   const imageDeleteHandler = (url: string) => {
+    setImage((prevImages) =>
+      prevImages.filter(
+        (img) => img.name !== image.find((e) => e.name === img.name)?.name,
+      ),
+    );
     setImageUrls((prevUrls) => prevUrls.filter((e) => e !== url));
   };
 
