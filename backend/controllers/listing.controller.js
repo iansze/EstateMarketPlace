@@ -69,11 +69,12 @@ export const updateListing = async (req, res, next) => {
       //If parking is false, this won't include the parking property in the
       //updatedFields object
       ...(req.body.hasOwnProperty("parking") && { parking }),
-
       ...(req.body.hasOwnProperty("offer") && { offer }),
       ...(images && images.length > 0 && { images }),
       ...(userRef && { userRef }),
     };
+
+    //if offer is true, then discountedPrice must be less than price
     if (offer) {
       const currentPrice = price !== "" ? price : listing.price;
       const currentDiscountedPrice =

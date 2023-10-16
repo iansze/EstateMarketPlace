@@ -31,7 +31,7 @@ const CreateListingPage = () => {
   const isOfferChecked = watch("offer");
 
   const handleUploadSuccess = (urls: string[]) => {
-    setImageUrls((prevUrls) => [...prevUrls, ...urls]);
+    setImageUrls(urls);
   };
 
   const onSubmit: SubmitHandler<ListingPost> = async (data) => {
