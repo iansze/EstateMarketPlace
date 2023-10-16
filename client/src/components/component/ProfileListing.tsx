@@ -79,7 +79,9 @@ const ProfileListing = () => {
               >
                 DELETE
               </button>
-              <button className="font-semibold text-blue-500">EDIT</button>
+              <Link to={`/edit-listing/${listing._id}`}>
+                <button className="font-semibold text-blue-500">EDIT</button>
+              </Link>
             </div>
           </div>
         ))}

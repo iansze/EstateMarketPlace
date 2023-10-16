@@ -10,6 +10,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className = "", ...props }, ref) => (
     <input
       ref={ref}
+      defaultValue={props.defaultValue}
       className={`rounded-md border-2 border-solid p-2 ${className}`}
       {...props}
     />

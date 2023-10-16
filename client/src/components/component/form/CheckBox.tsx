@@ -9,6 +9,7 @@ type CheckboxInputProps = {
 export const CheckboxInput = ({
   register,
   name,
+
   ...props
 }: CheckboxInputProps) => (
   <div className="flex gap-2">
