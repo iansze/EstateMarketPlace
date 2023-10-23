@@ -38,6 +38,7 @@ export type ListingPost = {
   description: string;
   address: string;
   price: number;
+  sellPrice: number;
   discountedPrice: number;
   baths: number;
   beds: number;

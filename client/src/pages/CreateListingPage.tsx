@@ -29,6 +29,7 @@ const CreateListingPage = () => {
   });
 
   const isOfferChecked = watch("offer");
+  const isSellingChecked = watch("sell");
 
   const handleUploadSuccess = (urls: string[]) => {
     setImageUrls(urls);
@@ -125,6 +126,15 @@ const CreateListingPage = () => {
                 subLabel="($ /Month)"
                 required
                 {...register("discountedPrice")}
+              />
+            )}
+            {isSellingChecked && (
+              <LabelledInput
+                label="Selling Price"
+                type="number"
+                id="sellPrice"
+                required
+                {...register("sellPrice")}
               />
             )}
           </div>

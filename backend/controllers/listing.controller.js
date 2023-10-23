@@ -41,6 +41,8 @@ export const updateListing = async (req, res, next) => {
     description,
     address,
     price,
+    beds,
+    sellingPrice,
     discountedPrice,
     baths,
     sell,
@@ -59,6 +61,8 @@ export const updateListing = async (req, res, next) => {
       ...(description && { description }),
       ...(address && { address }),
       ...(price && { price }),
+      ...(sellingPrice && { sellingPrice }),
+      ...(beds && { beds }),
       ...(req.body.hasOwnProperty("discountedPrice") && { discountedPrice }),
       ...(baths && { baths }),
       ...(req.body.hasOwnProperty("sell") && { sell }),
@@ -73,19 +77,6 @@ export const updateListing = async (req, res, next) => {
       ...(images && images.length > 0 && { images }),
       ...(userRef && { userRef }),
     };
-
-    //if offer is true, then discountedPrice must be less than price
-    if (offer) {
-      const currentPrice = price !== "" ? price : listing.price;
-      const currentDiscountedPrice =
-        discountedPrice !== "" ? discountedPrice : listing.discountedPrice;
-
-      if (currentPrice < currentDiscountedPrice) {
-        return res
-          .status(400)
-          .json({ message: "Discounted price cannot be greater than actual price" });
-      }
-    }
 
     await Listing.findByIdAndUpdate(req.params.id, { $set: updatedFields }, { new: true });
     return res.status(200).json({ listing });
@@ -103,7 +94,7 @@ export const getListing = async (req, res, next) => {
     return res.status(401).json({ message: "You can only update your listing" });
   }
   try {
-    return res.status(200).json({ listing });
+    return res.status(200).json(listing);
   } catch (err) {
     next(err);
   }

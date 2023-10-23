@@ -11,6 +11,7 @@ import CreateListing from "./pages/CreateListingPage";
 import Header from "./components/component/Header";
 import AuthRoutes from "./components/component/AuthRoutes";
 import EditListing from "./pages/EditListingPage";
+import ListingDetail from "./pages/ListingDetailPage";
 
 const App: FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/listing/:id" element={<ListingDetail />} />
           <Route element={<AuthRoutes />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/create-listing" element={<CreateListing />} />

@@ -36,6 +36,7 @@ const EditListingPage = () => {
     },
   });
 
+  //Receive image urls from ImageUploader component
   const handleUploadSuccess = (urls: string[]) => {
     setImageUrls(urls);
   };
@@ -45,14 +46,16 @@ const EditListingPage = () => {
     const fetchListingData = async () => {
       const data = await getListingById(id as string);
       //Set the form values
-      for (const key of Object.keys(data.listing) as Array<keyof ListingPost>) {
-        setValue(key, data.listing[key]);
+      for (const key of Object.keys(data) as Array<keyof ListingPost>) {
+        setValue(key, data[key]);
       }
     };
     fetchListingData();
   }, [id, setValue]);
 
   const isOfferChecked = watch("offer");
+  const isSellingChecked = watch("sell");
+  //if database has images, pass images to ImageUploader component
   const storedImage = watch("images");
 
   useEffect(() => {
@@ -65,8 +68,10 @@ const EditListingPage = () => {
     data.images = imageUrls;
     data.userRef = currentUser._id;
 
-    console.log(data);
-
+    if (Number(data.discountedPrice) > Number(data.price)) {
+      alert("Discounted price cannot be greater than regular price");
+      return;
+    }
     mutate({ data, id: id as string });
   };
 
@@ -149,6 +154,15 @@ const EditListingPage = () => {
                 subLabel="($ /Month)"
                 required
                 {...register("discountedPrice")}
+              />
+            )}
+            {isSellingChecked && (
+              <LabelledInput
+                label="Selling Price"
+                type="number"
+                id="sellPrice"
+                required
+                {...register("sellPrice")}
               />
             )}
           </div>

@@ -252,3 +252,25 @@ export const getListingById = async (id: string) => {
     throw err;
   }
 };
+
+export const getUser = async (id: string) => {
+  try {
+    const res = await fetch(`/api/user/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+
+      throw new Error(errorData.message);
+    }
+    const responseData = await res.json();
+    return responseData;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
