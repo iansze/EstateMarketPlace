@@ -30,6 +30,11 @@ export type CurrentUserState = {
 
 export type RootState = {
   user: CurrentUserState;
+  search: SearchState;
+};
+
+export type SearchState = {
+  currentSearchTerm: string | null;
 };
 
 export type ListingPost = {
@@ -38,7 +43,7 @@ export type ListingPost = {
   description: string;
   address: string;
   price: number;
-  sellPrice: number;
+  sellingPrice: number;
   discountedPrice: number;
   baths: number;
   beds: number;
@@ -50,4 +55,15 @@ export type ListingPost = {
   offer: boolean;
   images: string[];
   userRef: string;
+};
+
+export type SearchingForm = {
+  search?: string;
+  sell?: boolean;
+  rent?: boolean;
+  offer?: boolean;
+  furnished?: boolean;
+  parking?: boolean;
+  date?: string;
+  sort?: string;
 };

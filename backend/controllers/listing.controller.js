@@ -99,3 +99,44 @@ export const getListing = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getSearchListing = async (req, res, next) => {
+  try {
+    let offer = req.query.offer;
+    if (offer === undefined || offer === "false") {
+      offer = { $in: [false, true] };
+    }
+    let furnished = req.query.furnished;
+    if (furnished === undefined || furnished === "false") {
+      furnished = { $in: [false, true] };
+    }
+    let parking = req.query.parking;
+    if (parking === undefined || parking === "false") {
+      parking = { $in: [false, true] };
+    }
+    const searchTerm = req.query.searchTerm || "";
+    const sortMap = {
+      latest: { createdAt: "desc" },
+      oldest: { createdAt: "asc" },
+      priceHighToLow: { price: "desc" },
+      priceLowToHigh: { price: "asc" },
+    };
+    const sortOrder = req.query.sort ? sortMap[req.query.sort] : { createdAt: "desc" };
+
+    let query = {
+      listName: { $regex: searchTerm, $options: "i" },
+    };
+
+    if (req.query.sell === "true") {
+      query.sell = true;
+    }
+    if (req.query.rent === "true") {
+      query.rent = true;
+    }
+
+    const listings = await Listing.find(query).sort(sortOrder);
+    return res.status(200).json(listings);
+  } catch (err) {
+    next(err);
+  }
+};

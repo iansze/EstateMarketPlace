@@ -18,6 +18,8 @@ import Contact from "../components/component/Contact";
 const ListingDetailPage = () => {
   const [isContactOpened, setIsContactOpened] = useState<boolean>(false);
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const [rent, setRent] = useState<boolean>(false);
+  const [sell, setSell] = useState<boolean>(false);
   const { id } = useParams();
   const { data, isLoading, isError } = useQuery<ListingPost, string>(
     ["listing", id],
@@ -51,15 +53,34 @@ const ListingDetailPage = () => {
             {data.address}
           </p>
           <div className="my-2 flex gap-4">
-            <button className="rounded-md border-2 bg-lime-300 px-4 py-1">
-              For Rent
-            </button>
-            <button className="rounded-md border-2 bg-red-300 px-4 py-1">
-              For Sale
-            </button>
+            {(data.discountedPrice || data.price) && (
+              <button
+                onClick={() => setRent(!rent)}
+                className="rounded-md border-2 bg-lime-300 px-4 py-1"
+              >
+                {rent
+                  ? data.discountedPrice
+                    ? `$${data.discountedPrice.toLocaleString(
+                        "en-us",
+                      )} / per month`
+                    : `$${data.price.toLocaleString("en-us")} / per month`
+                  : "For Rent"}
+              </button>
+            )}
+            {data.sellingPrice && (
+              <button
+                onClick={() => setSell(!sell)}
+                className="rounded-md border-2 bg-red-300 px-4 py-1"
+              >
+                {sell
+                  ? data.sellingPrice &&
+                    `$${data.sellingPrice.toLocaleString("en-us")}`
+                  : "For Sale"}
+              </button>
+            )}
           </div>
         </div>
-        <p className="mb-4">Description - {data.description}</p>
+        <p className="my-4 break-words">Description - {data.description}</p>
         <ul className="flex flex-wrap items-center gap-4 text-sm font-semibold text-green-900 sm:gap-6">
           <li className="flex items-center gap-1 whitespace-nowrap ">
             <FaBed className="text-lg" />

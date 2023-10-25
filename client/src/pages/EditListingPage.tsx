@@ -160,9 +160,9 @@ const EditListingPage = () => {
               <LabelledInput
                 label="Selling Price"
                 type="number"
-                id="sellPrice"
+                id="sellingPrice"
                 required
-                {...register("sellPrice")}
+                {...register("sellingPrice")}
               />
             )}
           </div>

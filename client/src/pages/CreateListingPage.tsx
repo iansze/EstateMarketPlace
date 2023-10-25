@@ -30,6 +30,7 @@ const CreateListingPage = () => {
 
   const isOfferChecked = watch("offer");
   const isSellingChecked = watch("sell");
+  const isRentChecked = watch("rent");
 
   const handleUploadSuccess = (urls: string[]) => {
     setImageUrls(urls);
@@ -110,14 +111,16 @@ const CreateListingPage = () => {
               required
               {...register("baths")}
             />
-            <LabelledInput
-              label="Regular Price"
-              type="number"
-              id="price"
-              subLabel="($ /Month)"
-              required
-              {...register("price")}
-            />
+            {isRentChecked && (
+              <LabelledInput
+                label="Regular Price"
+                type="number"
+                id="price"
+                subLabel="($ /Month)"
+                required
+                {...register("price")}
+              />
+            )}
             {isOfferChecked && (
               <LabelledInput
                 label="Discounted Price"
@@ -132,9 +135,9 @@ const CreateListingPage = () => {
               <LabelledInput
                 label="Selling Price"
                 type="number"
-                id="sellPrice"
+                id="sellingPrice"
                 required
-                {...register("sellPrice")}
+                {...register("sellingPrice")}
               />
             )}
           </div>
