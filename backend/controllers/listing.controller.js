@@ -90,9 +90,7 @@ export const getListing = async (req, res, next) => {
   if (!listing) {
     return res.status(404).json({ message: "Listing not found" });
   }
-  if (req.userId !== listing.userRef) {
-    return res.status(401).json({ message: "You can only update your listing" });
-  }
+
   try {
     return res.status(200).json(listing);
   } catch (err) {
