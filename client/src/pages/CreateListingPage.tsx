@@ -18,11 +18,7 @@ const CreateListingPage = () => {
   const { register, handleSubmit, watch } = useForm<ListingPost>();
   const { mutate, isLoading } = useMutation({
     mutationFn: createListing,
-    onSuccess: (data) => {
-      console.log(
-        "🚀 ~ file: CreateListingPage.tsx:15 ~ CreateListingPage ~ data:",
-        data,
-      );
+    onSuccess: () => {
       navigate("/profile");
     },
     onError: () => navigate("/sign-in"),

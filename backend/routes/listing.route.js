@@ -11,7 +11,7 @@ import { verifyUser } from "../middleware/auth.js";
 
 const router = Router();
 
-router.get("/list/:id", verifyUser, getListing);
+router.get("/list/:id", getListing);
 
 router.post("/create", verifyUser, createListing);
 
