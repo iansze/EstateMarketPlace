@@ -106,15 +106,19 @@ export const getSearchListing = async (req, res, next) => {
     if (offer === undefined || offer === "false") {
       offer = { $in: [false, true] };
     }
+
     let furnished = req.query.furnished;
     if (furnished === undefined || furnished === "false") {
       furnished = { $in: [false, true] };
     }
+
     let parking = req.query.parking;
     if (parking === undefined || parking === "false") {
       parking = { $in: [false, true] };
     }
+
     const searchTerm = req.query.searchTerm || "";
+
     const sortMap = {
       latest: { createdAt: "desc" },
       oldest: { createdAt: "asc" },
@@ -125,11 +129,15 @@ export const getSearchListing = async (req, res, next) => {
 
     let query = {
       listName: { $regex: searchTerm, $options: "i" },
+      parking: parking,
+      offer: offer,
+      furnished: furnished,
     };
 
     if (req.query.sell === "true") {
       query.sell = true;
     }
+
     if (req.query.rent === "true") {
       query.rent = true;
     }

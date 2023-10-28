@@ -12,8 +12,12 @@ import { useState } from "react";
 import SearchResult from "../components/component/searchResult/SearchResult";
 
 const Search = () => {
+  const headerSearchTerm = window.location.search;
+
   const navigate = useNavigate();
-  const [searchUrl, setSearchUrl] = useState<string>("");
+  const [searchUrl, setSearchUrl] = useState<string>(
+    headerSearchTerm.substring(1),
+  );
   const { register, handleSubmit } = useForm<SearchingForm>();
   const currentSearchTerm = useSelector(
     (state: RootState) => state.search.currentSearchTerm,
