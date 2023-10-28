@@ -296,3 +296,24 @@ export const getSearch = async (search: string) => {
     throw err;
   }
 };
+
+export const getAllListings = async () => {
+  try {
+    const res = await fetch(`/api/listing/allListing`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+
+      throw new Error(errorData.message);
+    }
+    const responseData = await res.json();
+    return responseData;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};

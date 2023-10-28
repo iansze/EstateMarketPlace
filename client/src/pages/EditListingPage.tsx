@@ -55,6 +55,7 @@ const EditListingPage = () => {
 
   const isOfferChecked = watch("offer");
   const isSellingChecked = watch("sell");
+  const isRentChecked = watch("rent");
   //if database has images, pass images to ImageUploader component
   const storedImage = watch("images");
 
@@ -138,14 +139,16 @@ const EditListingPage = () => {
               required
               {...register("baths")}
             />
-            <LabelledInput
-              label="Regular Price"
-              type="number"
-              id="price"
-              subLabel="($ /Month)"
-              required
-              {...register("price")}
-            />
+            {isRentChecked && (
+              <LabelledInput
+                label="Regular Price"
+                type="number"
+                id="price"
+                subLabel="($ /Month)"
+                required
+                {...register("price")}
+              />
+            )}
             {isOfferChecked && (
               <LabelledInput
                 label="Discounted Price"

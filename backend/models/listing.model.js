@@ -16,7 +16,6 @@ const listingSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: true,
     },
     sellingPrice: {
       type: Number,

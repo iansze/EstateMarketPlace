@@ -21,10 +21,12 @@ const Header = () => {
   return (
     <header className=" bg-slate-200 shadow-sm ">
       <div className="mx-auto flex w-5/6 items-center justify-between p-3">
-        <h1 className="flex-wrap text-sm font-bold sm:text-xl">
-          <span className="text-slate-600">Tim</span>
-          <span className="">Estate</span>
-        </h1>
+        <Link to="/">
+          <h1 className="flex-wrap text-sm font-bold sm:text-xl">
+            <span className="text-slate-600">Tim</span>
+            <span className="">Estate</span>
+          </h1>
+        </Link>
         <form
           onSubmit={handleSubmit(submitHandler)}
           className="flex items-center justify-center rounded-lg bg-slate-100 p-2 "

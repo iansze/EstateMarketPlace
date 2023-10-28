@@ -5,6 +5,7 @@ import {
   updateListing,
   getListing,
   getSearchListing,
+  getAllListing,
 } from "../controllers/listing.controller.js";
 import { verifyUser } from "../middleware/auth.js";
 
@@ -19,5 +20,7 @@ router.delete("/delete/:id", verifyUser, deleteListing);
 router.put("/update/:id", verifyUser, updateListing);
 
 router.get("/get", getSearchListing);
+
+router.get("/allListing", getAllListing);
 
 export default router;

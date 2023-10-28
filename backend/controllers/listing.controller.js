@@ -140,3 +140,12 @@ export const getSearchListing = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getAllListing = async (req, res, next) => {
+  try {
+    const listings = await Listing.find();
+    return res.status(200).json(listings);
+  } catch (err) {
+    next(err);
+  }
+};

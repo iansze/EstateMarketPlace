@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useSelector } from "react-redux";
+import { Navigation } from "swiper/modules";
 import "swiper/css/bundle";
 import {
   FaBath,
@@ -35,7 +36,7 @@ const ListingDetailPage = () => {
 
   return (
     <div className="">
-      <Swiper navigation className="mySwiper">
+      <Swiper modules={[Navigation]} navigation className="mySwiper">
         {data?.images.map((image) => (
           <SwiperSlide key={image}>
             <div
