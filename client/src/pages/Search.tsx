@@ -117,11 +117,15 @@ const Search = () => {
           SEARCH
         </button>
       </form>
-      <div className=" p-8 text-2xl font-semibold">
-        <h1 className="mb-4 text-center">Listing Result</h1>
-        {isLoading && <p>Loading...</p>}
-        {isError && <p>{isError}</p>}
-        {data && <SearchResult data={data} />}
+      <div className="mx-auto w-5/6">
+        <h1 className="mt-4 text-center text-2xl font-semibold">
+          Listing Result
+        </h1>
+        <div className=" p-8 text-2xl font-semibold">
+          {isLoading && <p>Loading...</p>}
+          {isError && <p>{isError}</p>}
+          {data && <SearchResult data={data} />}
+        </div>
       </div>
     </div>
   );
