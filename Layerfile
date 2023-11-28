@@ -11,7 +11,7 @@ RUN curl -fSsL https://deb.nodesource.com/setup_12.x | bash && \
 MEMORY 2G
 ENV NODE_OPTIONS=--max-old-space-size=8192
 
-COPY . .
+COPY /client
 RUN npm install || true
 RUN BACKGROUND npm start || python3 -m http.server 3000
 
