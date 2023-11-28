@@ -11,8 +11,8 @@ RUN curl -fSsL https://deb.nodesource.com/setup_12.x | bash && \
 MEMORY 2G
 ENV NODE_OPTIONS=--max-old-space-size=8192
 
-COPY / /root
-RUN /root/client/npm install || true
+COPY / /client
+RUN npm install || true
 RUN BACKGROUND npm start || python3 -m http.server 3000
 
 # Create a unique link to share the app in this runner.
