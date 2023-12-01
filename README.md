@@ -1,7 +1,7 @@
 ﻿# EstateMarketPlace
 The "EstateMarketPlace" project is a web-based application designed to facilitate the buying, selling, and renting of real estate properties. Aimed at providing a user-friendly platform, it connects property owners with potential buyers or renters, streamlining the process of real estate transactions.
 
-Key Features:
+#Key Features:
 User Authentication: Secure sign-up and login functionalities for users, ensuring a safe and personalized experience.
 
 Property Listings: Users can browse through various property listings, with detailed information and images to aid in their decision-making.
