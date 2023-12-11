@@ -35,7 +35,7 @@ const Card = ({
           className="transition-scale h-[320px]  w-full object-cover duration-300 hover:scale-110"
         />
         <div className="flex w-full flex-col gap-2 p-3 text-base">
-          <h1 className="h-[60px] text-xl">{title}</h1>
+          <h1 className="h-[60px] text-xl font-semibold">{title}</h1>
           <p className="flex items-center gap-2 text-sm">
             <FaMapMarkerAlt />
             {address}

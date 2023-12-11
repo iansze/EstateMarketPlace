@@ -34,7 +34,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="mx-auto mt-8 flex flex-col p-3 md:w-3/5 ">
+      <div className="mx-auto mt-8 flex w-3/5 flex-col  p-3">
         <h1 className="text-3xl font-bold md:text-6xl">
           Find your next perfect <br />
           Place with us
@@ -66,25 +66,27 @@ const HomePage = () => {
         </Swiper>
       </div>
       {data && (
-        <div className="mx-auto my-8 w-4/5 p-4">
-          <h1 className="mb-4 text-xl font-semibold">Recent News</h1>
+        <div className="mx-auto my-8 w-full p-4 sm:w-11/12">
+          <h1 className="mb-4 text-2xl font-bold">Recent News</h1>
           <SearchResult data={data} />
         </div>
       )}
       {rentList.length > 0 && (
-        <div className="mx-auto my-8 w-4/5 p-4 font-semibold">
-          <h1 className="mb-4 text-xl">Recent places for rent</h1>
+        <div className="my-8w-full mx-auto p-4 font-semibold sm:w-11/12">
+          <h1 className="mb-4 text-2xl font-bold">Recent places for rent</h1>
           <SearchResult data={rentList} />
         </div>
       )}
       {sellList.length > 0 && (
-        <div className="mx-auto my-8 w-4/5 p-4 font-semibold">
-          <h1 className="mb-4 text-xl">Recent places for sale</h1>
+        <div className="mx-auto my-8 w-full p-4 font-semibold sm:w-11/12">
+          <h1 className="mb-4 text-2xl font-bold">Recent places for sale</h1>
           <SearchResult data={sellList} />
         </div>
       )}
-      {isLoading && <p className="text-center text-3xl">Loading...</p>}
-      {isError && <p>{isError}</p>}
+      {isLoading && (
+        <p className="text-center text-3xl font-bold">Loading...</p>
+      )}
+      {isError && <p className="text-center text-3xl font-bold">{isError}</p>}
     </>
   );
 };
