@@ -43,7 +43,7 @@ const Search = () => {
   };
 
   return (
-    <div className="flex flex-col gap-8 md:flex-row ">
+    <div className="flex flex-col gap-4 md:flex-row ">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-8 border-b-2 p-8 sm:border-r-2 md:min-h-screen xl:min-w-[350px]"
@@ -117,11 +117,11 @@ const Search = () => {
           SEARCH
         </button>
       </form>
-      <div className="mx-auto w-5/6">
-        <h1 className="mt-4 text-center text-2xl font-semibold">
+      <div className="mx-auto p-4 md:w-5/6">
+        <h1 className="m-4 text-center text-2xl font-semibold">
           Listing Result
         </h1>
-        <div className=" p-8 text-2xl font-semibold">
+        <div className=" text-2xl font-semibold md:p-4">
           {isLoading && <p>Loading...</p>}
           {isError && <p>{isError}</p>}
           {data && <SearchResult data={data} />}
