@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { setCurrentUser } from "../../redux/feature/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import GoogleAuth from "./GoogleAuth";
+import Loading from "./Loading";
 
 type Mode = { mode: "signUp" | "signIn" | "update" };
 type FormProps = Mode & {
@@ -102,9 +103,11 @@ const AuthForm = ({ mode, photoURL, username, email }: FormProps) => {
             isLoading ? " disabled:opacity-70" : ""
           } `}
         >
-          {isLoading
-            ? "Loading..."
-            : { signUp: "Sign Up", signIn: "Sign In", update: "Update" }[mode]}
+          {isLoading ? (
+            <Loading messagae="Loading, please wait..." />
+          ) : (
+            { signUp: "Sign Up", signIn: "Sign In", update: "Update" }[mode]
+          )}
         </button>
         {/*Goole Login*/}
         {(mode === "signUp" || mode === "signIn") && <GoogleAuth />}

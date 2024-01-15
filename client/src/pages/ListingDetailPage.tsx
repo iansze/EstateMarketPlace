@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 import { useState } from "react";
 import Contact from "../components/component/Contact";
+import Loading from "../components/component/Loading";
 
 const ListingDetailPage = () => {
   const [isContactOpened, setIsContactOpened] = useState<boolean>(false);
@@ -27,7 +28,7 @@ const ListingDetailPage = () => {
     () => getListingById(id as string),
   );
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading messagae="Loading, please wait..." />;
   }
 
   if (isError) {

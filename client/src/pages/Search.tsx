@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { getSearch } from "../components/util/Http";
 import { useState } from "react";
 import SearchResult from "../components/component/searchResult/SearchResult";
+import Loading from "../components/component/Loading";
 
 const Search = () => {
   const headerSearchTerm = window.location.search;
@@ -122,7 +123,7 @@ const Search = () => {
           Listing Result
         </h1>
         <div className=" text-2xl font-semibold md:p-4">
-          {isLoading && <p>Loading...</p>}
+          {isLoading && <Loading messagae="Loading, please wait..." />}
           {isError && <p>{isError}</p>}
           {data && <SearchResult data={data} />}
         </div>

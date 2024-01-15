@@ -7,6 +7,7 @@ import { ListingPost } from "../components/types/Types";
 import { useEffect, useState } from "react";
 import { Autoplay, Pagination } from "swiper/modules";
 import SearchResult from "../components/component/searchResult/SearchResult";
+import Loading from "../components/component/Loading";
 
 const HomePage = () => {
   const [images, setImages] = useState<string[]>([]);
@@ -83,9 +84,7 @@ const HomePage = () => {
           <SearchResult data={sellList} />
         </div>
       )}
-      {isLoading && (
-        <p className="text-center text-3xl font-bold">Loading...</p>
-      )}
+      {isLoading && <Loading messagae="Loading, please wait..." />}
       {isError && <p className="text-center text-3xl font-bold">{isError}</p>}
     </>
   );

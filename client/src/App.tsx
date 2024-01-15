@@ -13,8 +13,50 @@ import AuthRoutes from "./components/component/AuthRoutes";
 import EditListing from "./pages/EditListingPage";
 import ListingDetail from "./pages/ListingDetailPage";
 import Search from "./pages/Search";
+import { useState, useEffect } from "react";
+import Loading from "./components/component/Loading";
 
 const App: FC = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [isSlow, setSlow] = useState(false);
+
+  useEffect(() => {
+    const alreadyLoaded = localStorage.getItem("alreadyLoaded");
+
+    if (!alreadyLoaded) {
+      localStorage.setItem("alreadyLoaded", "true");
+
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+
+      const slowLoadTimer = setTimeout(() => {
+        if (isLoading) {
+          setSlow(true);
+        }
+      }, 5000);
+
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(slowLoadTimer);
+      };
+    } else {
+      setLoading(false);
+    }
+  }, [isLoading]);
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center">
+        {isSlow ? (
+          <Loading messagae="This may take a little longer due to your connection speed." />
+        ) : (
+          <Loading messagae="Loading, please wait..." />
+        )}
+      </div>
+    );
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
