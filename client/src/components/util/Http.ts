@@ -1,11 +1,13 @@
 import { FormValues, GoogleData, ListingPost } from "../types/Types";
 import { QueryClient } from "@tanstack/react-query";
 
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
 export const queryClient = new QueryClient();
 
 export const signUp = async (data: FormValues) => {
   try {
-    const res = await fetch("/api/auth/signup", {
+    const res = await fetch(`${baseUrl}/api/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +29,7 @@ export const signUp = async (data: FormValues) => {
 
 export const signIn = async (data: FormValues) => {
   try {
-    const res = await fetch("/api/auth/signin", {
+    const res = await fetch(`${baseUrl}/api/auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +52,7 @@ export const signIn = async (data: FormValues) => {
 
 export const updateUser = async (data: FormValues, id: string) => {
   try {
-    const res = await fetch(`/api/user/update/${id}`, {
+    const res = await fetch(`${baseUrl}/api/user/update/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -64,10 +66,7 @@ export const updateUser = async (data: FormValues, id: string) => {
       throw new Error(errorData.message);
     }
     const responseData = await res.json();
-    console.log(
-      "🚀 ~ file: http.ts:44 ~ updateUser ~ responseData:",
-      responseData,
-    );
+
     return responseData;
   } catch (err) {
     console.error(err);
@@ -77,7 +76,7 @@ export const updateUser = async (data: FormValues, id: string) => {
 
 export const googleSignIn = async (data: GoogleData) => {
   try {
-    const res = await fetch("/api/auth/google-signin", {
+    const res = await fetch(`${baseUrl}/api/auth/google-signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -106,7 +105,7 @@ export const googleSignIn = async (data: GoogleData) => {
 
 export const deleteUser = async (id: string) => {
   try {
-    const res = await fetch(`/api/user/delete/${id}`, {
+    const res = await fetch(`${baseUrl}/api/user/delete/${id}`, {
       method: "DELETE",
     });
 
@@ -116,11 +115,6 @@ export const deleteUser = async (id: string) => {
       throw new Error(errorData.message);
     }
     const responseData = await res.json();
-    console.log(
-      "🚀 ~ file: http.ts:116 ~ deleteUser ~ responseData:",
-      responseData,
-    );
-
     return responseData;
   } catch (err) {
     console.error(err);
@@ -130,7 +124,7 @@ export const deleteUser = async (id: string) => {
 
 export const signOut = async () => {
   try {
-    const res = await fetch("/api/auth/logout", {
+    const res = await fetch(`${baseUrl}/api/auth/logout`, {
       method: "GET",
     });
 
@@ -148,7 +142,7 @@ export const signOut = async () => {
 
 export const createListing = async (data: ListingPost) => {
   try {
-    const res = await fetch("/api/listing/create", {
+    const res = await fetch(`${baseUrl}/api/listing/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -171,7 +165,7 @@ export const createListing = async (data: ListingPost) => {
 
 export const getListingByUser = async (id: string) => {
   try {
-    const res = await fetch(`/api/user/listing/${id}`, {
+    const res = await fetch(`${baseUrl}/api/user/listing/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -193,7 +187,7 @@ export const getListingByUser = async (id: string) => {
 
 export const deleteListing = async (id: string) => {
   try {
-    const res = await fetch(`/api/listing/delete/${id}`, {
+    const res = await fetch(`${baseUrl}/api/listing/delete/${id}`, {
       method: "DELETE",
     });
     if (!res.ok) {
@@ -210,7 +204,7 @@ export const deleteListing = async (id: string) => {
 
 export const updateListing = async (data: ListingPost, id: string) => {
   try {
-    const res = await fetch(`/api/listing/update/${id}`, {
+    const res = await fetch(`${baseUrl}/api/listing/update/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -233,7 +227,7 @@ export const updateListing = async (data: ListingPost, id: string) => {
 
 export const getListingById = async (id: string) => {
   try {
-    const res = await fetch(`/api/listing/list/${id}`, {
+    const res = await fetch(`${baseUrl}/api/listing/list/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -255,7 +249,7 @@ export const getListingById = async (id: string) => {
 
 export const getUser = async (id: string) => {
   try {
-    const res = await fetch(`/api/user/${id}`, {
+    const res = await fetch(`${baseUrl}/api/user/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -277,7 +271,7 @@ export const getUser = async (id: string) => {
 
 export const getSearch = async (search: string) => {
   try {
-    const res = await fetch(`/api/listing/get?${search}`, {
+    const res = await fetch(`${baseUrl}/api/listing/get?${search}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -299,7 +293,7 @@ export const getSearch = async (search: string) => {
 
 export const getAllListings = async () => {
   try {
-    const res = await fetch(`/api/listing/allListing`, {
+    const res = await fetch(`${baseUrl}/api/listing/allListing`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
