@@ -14,6 +14,7 @@ const ProfileListing = () => {
       if (currentUser?._id) {
         try {
           const data = await getListingByUser(currentUser?._id);
+          console.log(data);
           setListings(data.listing);
         } catch (error) {
           console.log(error);

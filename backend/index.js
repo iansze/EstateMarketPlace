@@ -7,13 +7,14 @@ import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
 import listingRouter from "./routes/listing.route.js";
 import path from "path";
+const PORT = process.env.PORT || 3000;
 
 dotenv.config();
 
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors());
+app.use(cors({ Credentials: true }));
 
 mongoose
   .connect(process.env.MONGOURL)
@@ -24,8 +25,8 @@ mongoose
     console.log("Not Connected to MongoDB ERROR! ", err);
   });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 app.use((req, res, next) => {
