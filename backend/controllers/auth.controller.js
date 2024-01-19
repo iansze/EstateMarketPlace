@@ -44,7 +44,7 @@ export const signin = async (req, res, next) => {
     //password property will be assigned to the userPassword
     const { password: userPassword, ...user } = isVaildUser._doc;
     res
-      .cookie("token", token, { httpOnly: true })
+      .cookie("token", token, { httpOnly: true, sameSite: "None", secure: true })
       .status(200)
       .json({ message: "User logged in successfully", user: user });
   } catch (err) {
@@ -62,7 +62,7 @@ export const googleSignin = async (req, res, next) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {});
       const { password: userPassword, ...userDetails } = user._doc;
       res
-        .cookie("token", token, { httpOnly: true })
+        .cookie("token", token, { httpOnly: true, sameSite: "None", secure: true })
         .status(200)
         .json({ message: "User logged in successfully", user: userDetails });
     } else {
@@ -80,7 +80,7 @@ export const googleSignin = async (req, res, next) => {
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, {});
       const { password: userPassword, ...user } = newUser._doc;
       res
-        .cookie("token", token, { httpOnly: true })
+        .cookie("token", token, { httpOnly: true, sameSite: "Lax" })
         .status(200)
         .json({ message: "User logged in successfully", user });
     }
@@ -91,7 +91,7 @@ export const googleSignin = async (req, res, next) => {
 
 export const logOut = (req, res, next) => {
   try {
-    res.clearCookie("token");
+    res.clearCookie("token", { httpOnly: true, sameSite: "None", secure: true });
     res.status(200).json({ message: "User logged out successfully" });
   } catch (err) {
     next(err);
