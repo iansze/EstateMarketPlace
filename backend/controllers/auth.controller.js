@@ -91,7 +91,7 @@ export const googleSignin = async (req, res, next) => {
 
 export const logOut = (req, res, next) => {
   try {
-    res.clearCookie("token");
+    res.clearCookie("token", { httpOnly: true, sameSite: "None", secure: true, path: "/" });
     res.status(200).json({ message: "User logged out successfully" });
   } catch (err) {
     next(err);
