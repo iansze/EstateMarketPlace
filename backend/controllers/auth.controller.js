@@ -44,7 +44,7 @@ export const signin = async (req, res, next) => {
     //password property will be assigned to the userPassword
     const { password: userPassword, ...user } = isVaildUser._doc;
     res
-      .cookie("token", token, { httpOnly: true })
+      .cookie("token", token, { httpOnly: true, sameSite: "None" })
       .status(200)
       .json({ message: "User logged in successfully", user: user });
   } catch (err) {
@@ -62,7 +62,7 @@ export const googleSignin = async (req, res, next) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {});
       const { password: userPassword, ...userDetails } = user._doc;
       res
-        .cookie("token", token, { httpOnly: true })
+        .cookie("token", token, { httpOnly: true, sameSite: "None" })
         .status(200)
         .json({ message: "User logged in successfully", user: userDetails });
     } else {
