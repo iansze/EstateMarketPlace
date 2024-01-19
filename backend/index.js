@@ -7,14 +7,20 @@ import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
 import listingRouter from "./routes/listing.route.js";
 import path from "path";
-const PORT = process.env.PORT || 3000;
-
 dotenv.config();
+
+const PORT = process.env.PORT || 3000;
+const corsOrigin = process.env.CORS_ORIGIN;
 
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors({ Credentials: true }));
+app.use(
+  cors({
+    origin: corsOrigin,
+    credentials: true,
+  })
+);
 
 mongoose
   .connect(process.env.MONGOURL)
@@ -25,20 +31,16 @@ mongoose
     console.log("Not Connected to MongoDB ERROR! ", err);
   });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X_Requested-With, Content-Type, Accept, Authorization,X-Api-Key"
+//   );
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS, PUT");
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X_Requested-With, Content-Type, Accept, Authorization,X-Api-Key"
-  );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS, PUT");
-
-  next();
-});
+//   next();
+// });
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
@@ -53,4 +55,8 @@ app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
   return res.status(statusCode).json({ success: false, statusCode, message });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

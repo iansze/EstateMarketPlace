@@ -31,6 +31,7 @@ export const signIn = async (data: FormValues) => {
   try {
     const res = await fetch(`${baseUrl}/api/auth/signin`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -43,6 +44,7 @@ export const signIn = async (data: FormValues) => {
       throw new Error(errorData.message);
     }
     const responseData = await res.json();
+
     return responseData;
   } catch (err) {
     console.error(err);
@@ -54,6 +56,7 @@ export const updateUser = async (data: FormValues, id: string) => {
   try {
     const res = await fetch(`${baseUrl}/api/user/update/${id}`, {
       method: "PUT",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -78,6 +81,7 @@ export const googleSignIn = async (data: GoogleData) => {
   try {
     const res = await fetch(`${baseUrl}/api/auth/google-signin`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -107,6 +111,7 @@ export const deleteUser = async (id: string) => {
   try {
     const res = await fetch(`${baseUrl}/api/user/delete/${id}`, {
       method: "DELETE",
+      credentials: "include",
     });
 
     if (!res.ok) {
@@ -125,7 +130,8 @@ export const deleteUser = async (id: string) => {
 export const signOut = async () => {
   try {
     const res = await fetch(`${baseUrl}/api/auth/logout`, {
-      method: "GET",
+      method: "POST",
+      credentials: "include",
     });
 
     if (!res.ok) {
@@ -144,6 +150,7 @@ export const createListing = async (data: ListingPost) => {
   try {
     const res = await fetch(`${baseUrl}/api/listing/create`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -167,6 +174,7 @@ export const getListingByUser = async (id: string) => {
   try {
     const res = await fetch(`${baseUrl}/api/user/listing/${id}`, {
       method: "GET",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -189,6 +197,7 @@ export const deleteListing = async (id: string) => {
   try {
     const res = await fetch(`${baseUrl}/api/listing/delete/${id}`, {
       method: "DELETE",
+      credentials: "include",
     });
     if (!res.ok) {
       const errorData = await res.json();
@@ -206,6 +215,7 @@ export const updateListing = async (data: ListingPost, id: string) => {
   try {
     const res = await fetch(`${baseUrl}/api/listing/update/${id}`, {
       method: "PUT",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -229,6 +239,7 @@ export const getListingById = async (id: string) => {
   try {
     const res = await fetch(`${baseUrl}/api/listing/list/${id}`, {
       method: "GET",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -251,6 +262,7 @@ export const getUser = async (id: string) => {
   try {
     const res = await fetch(`${baseUrl}/api/user/${id}`, {
       method: "GET",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -273,6 +285,7 @@ export const getSearch = async (search: string) => {
   try {
     const res = await fetch(`${baseUrl}/api/listing/get?${search}`, {
       method: "GET",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -295,6 +308,7 @@ export const getAllListings = async () => {
   try {
     const res = await fetch(`${baseUrl}/api/listing/allListing`, {
       method: "GET",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },

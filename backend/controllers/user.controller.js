@@ -57,8 +57,6 @@ export const deleteUsers = async (req, res) => {
 
 export const getListingByUser = async (req, res) => {
   //req.userId come from the auth middleware = jwt
-  console.log(req.userId);
-  console.log(req.params.id);
   if (req.userId !== req.params.id) {
     return res.status(401).json({ message: "You can only view your listing" });
   }
